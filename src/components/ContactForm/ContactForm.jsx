@@ -1,39 +1,46 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import s from './ContactForm.module.css';
 
-export default class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+export default function  ContactForm ({onSubmit}) {
+  const [name, setName] = useState('')
+  const [number, setNumber] = useState('')
 
-  handleChange = e => {
+ const  handleChange = e => {
     const { name, value } = e.currentTarget;
 
-    this.setState({ [name]: value });
+    switch (name) {
+      case 'name':
+        setName(value)
+        break;
+      case 'number':
+        setNumber(value)
+        break;
+      default:
+        break;
+    }
   };
 
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
 
-    this.props.onSubmit(this.state);
+   onSubmit(name, number);
 
-    this.reset();
+    reset();
   };
 
-  reset = () => {
-    this.setState({ name: '', number: '' });
+  const reset = () => {
+    setName('')
+    setNumber('')
   };
 
-  render() {
     return (
-      <form className={s.form} onSubmit={this.handleSubmit}>
+      <form className={s.form} onSubmit={handleSubmit}>
         <label className={s.label}>
           Name
           <input
             className={s.input}
-            value={this.state.name}
-            onChange={this.handleChange}
+            value={name}
+            onChange={handleChange}
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -45,8 +52,8 @@ export default class ContactForm extends Component {
           Number
           <input
             className={s.input}
-            value={this.state.number}
-            onChange={this.handleChange}
+            value={number}
+            onChange={handleChange}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -59,5 +66,5 @@ export default class ContactForm extends Component {
         </button>
       </form>
     );
-  }
+
 }
