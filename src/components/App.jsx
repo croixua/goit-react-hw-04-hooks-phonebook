@@ -4,7 +4,6 @@ import Container from './Container/Container';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
-import { check } from 'prettier';
 
 export default function App() {
   const [contacts, setContacts] = useState([
